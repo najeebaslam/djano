@@ -4,7 +4,6 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from doodle.forms import *
 from django.shortcuts import * 
-
 from .models import Meeting, Choice, Mdate, Room
 
 #index method displas all list of created meetings 
@@ -56,9 +55,13 @@ def new_meeting(request):
         form = MeetingForm(request.POST)
         
         if(form.is_valid()):
-            # import pdb; pdb.set_trace()
             new_meeting = Meeting(title =  request.POST['title'], r_votes= request.POST['r_votes'], pub_date= timezone.now())
             new_meeting.save()
+            # adding there default option with one day difference of date
+            new_meeting.choice_set.create(choice_text='Prefered Option', choice_date= (timezone.now() + timezone.timedelta(days=1)))
+            new_meeting.choice_set.create(choice_text='Second Option', choice_date=( timezone.now() + timezone.timedelta(days=2)))
+            new_meeting.choice_set.create(choice_text='Last Option', choice_date= ( timezone.now() + timezone.timedelta(days=3)))
+
             message = "Congrats!! New Meeting has been created."
         else:
             message = "sorry something went wrong"
@@ -100,6 +103,7 @@ def results(request, meeting_id):
     room = Room.objects.filter(meeting = meeting)
     can_vote = mdate.exists()
     has_room = room.exists()
+    # import pdb; pdb.set_trace()
     if can_vote :
         mdate=mdate[0]
     if has_room :
