@@ -1,0 +1,22 @@
+<h1>Select Room</h1>
+<p>
+	<h3>Time has allready been choosen by voting</h3>
+	<h3> {{meeting_id}}</h3>
+</p>
+{% if success %} 
+<div></br></br>
+	<p> {{success}}</p>
+</div>	
+{%else %}
+
+<form action= "/doodle/room/{{meeting_id}}/"  method="post">{% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Create Meeting" />
+</form>
+
+{%endif%}
+
+<div></br></br>
+	<p> Go to <a href="{% url 'doodle:index'%}">Home</a> to View all meetings List </p>
+
+</div>

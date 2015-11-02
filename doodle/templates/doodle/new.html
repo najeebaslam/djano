@@ -1,0 +1,20 @@
+<h1>Create New meeting</h1>
+{% if success %} 
+<div></br></br>
+	<p> {{success}}</p>
+</div>	
+{%else %}
+
+<form action="/doodle/create/" method="post">{% csrf_token %}
+  {% for field in form %}
+  <div>{{ field.label_tag }} {{ field }}</div>
+  {% endfor %}
+  <input type="submit" value="Create Meeting" />
+</form>
+
+{%endif%}
+<div></br></br>
+	<p> Go to <a href="{% url 'doodle:index'%}">Home</a> to View all meetings List </p>
+
+</div>
+

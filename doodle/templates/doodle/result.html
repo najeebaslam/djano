@@ -1,0 +1,23 @@
+<h1>{{ meeting.title }}</h1>
+
+{%if can_vote %}
+    <h4>Chosen Date: </h4> {{mdate.mdate}} 
+    {%if has_room%}
+     <h4>Selected Room </h4>
+        <h5> Location:{{room.location}} </h5> 
+        <h5> Capacity:  {{room.capasity}} </h5>
+    {%else %}
+        <p> Now you can <a href="/doodle/room/{{meeting.id}}/">Chose a Room </a>  </p>
+    {%endif%}
+{% else %}
+	<ul>
+		{% for choice in meeting.choice_set.all %}
+		    <li>{{ choice.choice_text }} : {{ choice.choice_date }}  >> -- {{ choice.votes }}  vote{{ choice.votes|pluralize }}</li>
+		{% endfor %}
+	</ul>
+	<a href="{% url 'doodle:detail' meeting.id %}">Vote again?</a>
+{%endif%}
+
+<div></br></br>
+	<p> Go to <a href="{% url 'doodle:index'%}">Home</a> to View all meetings List </p>
+</div>

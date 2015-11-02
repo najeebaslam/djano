@@ -1,0 +1,12 @@
+<h1>Welcome to Doodle Home</h1>
+<h4>List of all meeting agendas</h4>
+{% if latest_meeting_list %}
+    <ul>
+    {% for metting in latest_meeting_list %}
+       <li><a href="{% url 'doodle:detail' metting.id %}">{{ metting.title }} Decided Meeting date : </a></li>
+    {% endfor %} 
+    </ul>
+{% else %}
+    <p>No Meetings are available.</p>
+{% endif %}
+<a href="{% url 'doodle:new_meeting' %}">Create new Meeting</a>

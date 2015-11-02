@@ -1,0 +1,16 @@
+<h1>Vote for meeting timing choice</h1>
+<h2>Meeting Title: {{ meeting.title }}</h2>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<form action="{% url 'doodle:vote' meeting.id %}" method="post">
+{% csrf_token %}
+{% for choice in meeting.choice_set.all %}
+    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
+    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }} : {{ choice.choice_date }} </label><br />
+{% endfor %}
+<input type="submit" value="Vote" />
+</form>
+
+<div></br></br>
+	<p> Go to <a href="{% url 'doodle:index'%}">Home</a> to View all meetings List </p>
+</div>
